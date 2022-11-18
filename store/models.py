@@ -108,6 +108,11 @@ class CartItem(models.Model):
     class Meta:
         unique_together = [['cart', 'product']]
 
+    @property
+    def total_price(self):
+        total_price = self.product.unit_price * self.quantity
+        return total_price
+
 
 class Review(models.Model):
     name = models.CharField(max_length=255)
