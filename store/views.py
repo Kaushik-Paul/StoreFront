@@ -5,6 +5,7 @@ from rest_framework.views import APIView
 from storefront.responses import init_response, send_200, send_201, send_204, send_400, send_401, send_404
 from store.models import Product, Collection, Review, Cart, CartItem
 from store.serializers import ProductSerializer, ReviewSerializer, CartSerializer, CartDetailsSerializer, CartItemSerializer
+from store.utils import CartItemUtils
 import logging
 logger = logging.getLogger("storefront")
 
@@ -172,6 +173,30 @@ class CartItemsView(APIView):
         cart_items_serializer = CartItemSerializer(cart_items, many=True)
         self.response["response_data"] = cart_items_serializer.data
         return send_200(self.response)
+
+    def post(self, request, cart_id):
+        cart = Cart.objects.filter(pk=cart_id).prefetch_related("items__product").first()
+        if not cart:
+            self.response["response_string"] = "Cart Not Found !!"
+            return send_404(data=self.response)
+        data = request.data
+        product_id = data.get("product_id")
+        quantity = data.get("quantity")
+        if not product_id or not quantity:
+            self.response["response_string"] = "Both quantity and product_id is required"
+            return send_400(data=self.response)
+        try:
+            cart_item = CartItemUtils.create_cart_item(product_id, quantity, cart)
+            self.response["response_data"] = CartItemSerializer(cart_item).data
+            return send_200(self.response)
+        except Product.DoesNotExist as ex:
+            logger.error(ex)
+            self.response["response_string"] = "Product id is not valid"
+            return send_400(self.response)
+        except Exception as ex:
+            logger.error(ex)
+            self.response["response_string"] = ex
+            return send_400(self.response)
 
 
 class CartItemDetailsView(APIView):
