@@ -3,9 +3,9 @@
   <component name="FacetManager">
     <facet type="django" name="Django">
       <configuration>
-        <option name="rootFolder" value="$MODULE_DIR$/../storefront2" />
-        <option name="settingsModule" value="storefront/settings.py" />
-        <option name="manageScript" value="$MODULE_DIR$/../storefront2/manage.py" />
+        <option name="rootFolder" value="$MODULE_DIR$/store_custom" />
+        <option name="settingsModule" value="settings.py" />
+        <option name="manageScript" value="manage.py" />
         <option name="environment" value="&lt;map/&gt;" />
         <option name="doNotUseTestRunner" value="false" />
         <option name="trackFilePattern" value="migrations" />
@@ -14,7 +14,7 @@
   </component>
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$" />
-    <orderEntry type="jdk" jdkName="Python 3.8 (venv)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.8 (storefront)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="PyDocumentationSettings">
@@ -25,7 +25,45 @@
     <option name="TEMPLATE_CONFIGURATION" value="Django" />
     <option name="TEMPLATE_FOLDERS">
       <list>
-        <option value="$MODULE_DIR$/../storefront2/playground/templates" />
+        <option value="$MODULE_DIR$/venv/lib/python3.8/site-packages/django/forms/jinja2/django/forms" />
+        <option value="$MODULE_DIR$/venv/lib/python3.8/site-packages/django/forms/jinja2/django/forms/errors/dict" />
+        <option value="$MODULE_DIR$/venv/lib/python3.8/site-packages/django/forms/jinja2/django/forms/errors/list" />
+        <option value="$MODULE_DIR$/venv/lib/python3.8/site-packages/django/forms/jinja2/django/forms/widgets" />
+        <option value="$MODULE_DIR$/venv/lib/python3.8/site-packages/django/forms/jinja2/django/forms/formsets" />
+        <option value="$MODULE_DIR$/venv/lib/python3.8/site-packages/django/forms/templates/django/forms" />
+        <option value="$MODULE_DIR$/venv/lib/python3.8/site-packages/django/forms/templates/django/forms/errors/dict" />
+        <option value="$MODULE_DIR$/venv/lib/python3.8/site-packages/django/forms/templates/django/forms/errors/list" />
+        <option value="$MODULE_DIR$/venv/lib/python3.8/site-packages/django/forms/templates/django/forms/widgets" />
+        <option value="$MODULE_DIR$/venv/lib/python3.8/site-packages/django/forms/templates/django/forms/formsets" />
+        <option value="$MODULE_DIR$/venv/lib/python3.8/site-packages/django/views/templates" />
+        <option value="$MODULE_DIR$/venv/lib/python3.8/site-packages/django/contrib/gis/templates/gis" />
+        <option value="$MODULE_DIR$/venv/lib/python3.8/site-packages/django/contrib/gis/templates/gis/admin" />
+        <option value="$MODULE_DIR$/venv/lib/python3.8/site-packages/django/contrib/auth/templates/auth/widgets" />
+        <option value="$MODULE_DIR$/venv/lib/python3.8/site-packages/django/contrib/admin/templates/admin" />
+        <option value="$MODULE_DIR$/venv/lib/python3.8/site-packages/django/contrib/admin/templates/admin/auth/user" />
+        <option value="$MODULE_DIR$/venv/lib/python3.8/site-packages/django/contrib/admin/templates/admin/widgets" />
+        <option value="$MODULE_DIR$/venv/lib/python3.8/site-packages/django/contrib/admin/templates/admin/includes" />
+        <option value="$MODULE_DIR$/venv/lib/python3.8/site-packages/django/contrib/admin/templates/admin/edit_inline" />
+        <option value="$MODULE_DIR$/venv/lib/python3.8/site-packages/django/contrib/admin/templates/registration" />
+        <option value="$MODULE_DIR$/venv/lib/python3.8/site-packages/django/contrib/postgres/jinja2/postgres/widgets" />
+        <option value="$MODULE_DIR$/venv/lib/python3.8/site-packages/django/contrib/postgres/templates/postgres/widgets" />
+        <option value="$MODULE_DIR$/venv/lib/python3.8/site-packages/django/contrib/admindocs/templates/admin_doc" />
+        <option value="$MODULE_DIR$/venv/lib/python3.8/site-packages/debug_toolbar/templates/debug_toolbar" />
+        <option value="$MODULE_DIR$/venv/lib/python3.8/site-packages/debug_toolbar/templates/debug_toolbar/panels" />
+        <option value="$MODULE_DIR$/venv/lib/python3.8/site-packages/debug_toolbar/templates/debug_toolbar/includes" />
+        <option value="$MODULE_DIR$/venv/lib/python3.8/site-packages/django_filters/templates/django_filters/widgets" />
+        <option value="$MODULE_DIR$/venv/lib/python3.8/site-packages/django_filters/templates/django_filters/rest_framework" />
+        <option value="$MODULE_DIR$/venv/lib/python3.8/site-packages/rest_framework/templates/rest_framework" />
+        <option value="$MODULE_DIR$/venv/lib/python3.8/site-packages/rest_framework/templates/rest_framework/docs" />
+        <option value="$MODULE_DIR$/venv/lib/python3.8/site-packages/rest_framework/templates/rest_framework/docs/auth" />
+        <option value="$MODULE_DIR$/venv/lib/python3.8/site-packages/rest_framework/templates/rest_framework/docs/langs" />
+        <option value="$MODULE_DIR$/venv/lib/python3.8/site-packages/rest_framework/templates/rest_framework/admin" />
+        <option value="$MODULE_DIR$/venv/lib/python3.8/site-packages/rest_framework/templates/rest_framework/inline" />
+        <option value="$MODULE_DIR$/venv/lib/python3.8/site-packages/rest_framework/templates/rest_framework/filters" />
+        <option value="$MODULE_DIR$/venv/lib/python3.8/site-packages/rest_framework/templates/rest_framework/vertical" />
+        <option value="$MODULE_DIR$/venv/lib/python3.8/site-packages/rest_framework/templates/rest_framework/horizontal" />
+        <option value="$MODULE_DIR$/venv/lib/python3.8/site-packages/rest_framework/templates/rest_framework/pagination" />
+        <option value="$MODULE_DIR$/playground/templates" />
       </list>
     </option>
   </component>
