@@ -3,7 +3,7 @@ from itertools import product
 
 from rest_framework import serializers
 
-from store.models import Product, Collection, Review
+from store.models import Product, Collection, Review, Cart
 
 
 class CollectionSerializer(serializers.ModelSerializer):
@@ -50,3 +50,13 @@ class ReviewSerializer(serializers.ModelSerializer):
 
     def get_product_title(self, review):
         return review.product.title
+
+
+class CartSerializer(serializers.ModelSerializer):
+    id = serializers.UUIDField(read_only=True)
+
+    class Meta:
+        model = Cart
+        fields = [
+            "id",
+        ]

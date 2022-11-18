@@ -3,8 +3,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from storefront.responses import init_response, send_200, send_201, send_400, send_401, send_404
-from store.models import Product, Collection, Review
-from store.serializers import ProductSerializer, ReviewSerializer
+from store.models import Product, Collection, Review, Cart
+from store.serializers import ProductSerializer, ReviewSerializer, CartSerializer
 import logging
 logger = logging.getLogger("storefront")
 
@@ -116,4 +116,18 @@ class ReviewDetail(APIView):
         self.response["response_string"] = "Review Updated Successfully!!"
         self.response["response_data"] = ReviewSerializer(review).data
         return send_200(data=self.response)
+
+
+class CreateCart(APIView):
+    def __init__(self):
+        self.response = init_response(
+            response_string="Cart created successfully !!"
+        )
+
+    def post(self, request):
+        cart = Cart.objects.create()
+        cart_serializer = CartSerializer(cart).data
+        self.response["response_data"] = cart_serializer
+        return send_200(self.response)
+
 

@@ -133,3 +133,46 @@ class ReviewAdmin(admin.ModelAdmin):
 
     search_fields = ["name", "product__title"]
     list_filter = ("name", "product__title")
+
+
+@admin.register(models.Cart)
+class CartAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "created_at",
+    )
+
+
+@admin.register(models.CartItem)
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = (
+        "get_cart_id",
+        "get_cart_created_at",
+        "get_product_title",
+        "quantity",
+    )
+
+    @admin.display(description="Product Title")
+    def get_product_title(self, obj):
+        try:
+            return obj.product.title
+        except Exception as e:
+            return None
+
+    @admin.display(description="Cart Id")
+    def get_cart_id(self, obj):
+        try:
+            return obj.cart.id
+        except Exception as e:
+            return None
+
+    @admin.display(description="Cart Created At")
+    def get_cart_created_at(self, obj):
+        try:
+            return obj.cart.created_at
+        except Exception as e:
+            return None
+
+    search_fields = ["product__title", "quantity"]
+    list_filter = ("product__title", "quantity")
+
