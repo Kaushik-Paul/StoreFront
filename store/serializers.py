@@ -63,12 +63,14 @@ class CartSerializer(serializers.ModelSerializer):
 
 
 class CartDetailsSerializer(serializers.ModelSerializer):
+    cart_id = serializers.UUIDField(source="id")
     items = serializers.SerializerMethodField(read_only=True)
     grand_total = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Cart
         fields = [
+            "cart_id",
             "items",
             "grand_total",
         ]
