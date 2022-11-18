@@ -214,3 +214,24 @@ class CartItemDetailsView(APIView):
         self.response["response_data"] = cart_item_serializer.data
         return send_200(self.response)
 
+    def patch(self, request, cart_id, cart_item_id):
+        cart_item = CartItem.objects.filter(pk=cart_item_id, cart_id=cart_id).first()
+        if not cart_item:
+            self.response["response_string"] = "Cart Item Not Found !!"
+            return send_404(data=self.response)
+        data = request.data
+        for key in data:
+            setattr(cart_item, key, data[key])
+        cart_item.save()
+        self.response["response_string"] = "Cart Item Updated Successfully!!"
+        self.response["response_data"] = CartItemSerializer(cart_item).data
+        return send_200(data=self.response)
+
+    def delete(self, request, cart_id, cart_item_id):
+        cart_item = CartItem.objects.filter(pk=cart_item_id, cart_id=cart_id).first()
+        if not cart_item:
+            self.response["response_string"] = "Cart Item Not Found !!"
+            return send_404(data=self.response)
+        cart_item.delete()
+        self.response["response_string"] = "Cart Item Deleted Successfully !!"
+        return send_204(self.response)
