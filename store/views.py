@@ -2,9 +2,9 @@ import json
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from storefront.responses import init_response, send_200, send_201, send_400, send_401, send_404
+from storefront.responses import init_response, send_200, send_201, send_204, send_400, send_401, send_404
 from store.models import Product, Collection, Review, Cart
-from store.serializers import ProductSerializer, ReviewSerializer, CartSerializer
+from store.serializers import ProductSerializer, ReviewSerializer, CartSerializer, CartDetailsSerializer
 import logging
 logger = logging.getLogger("storefront")
 
@@ -129,5 +129,30 @@ class CreateCart(APIView):
         cart_serializer = CartSerializer(cart).data
         self.response["response_data"] = cart_serializer
         return send_200(self.response)
+
+
+class CartDetailView(APIView):
+    def __init__(self):
+        self.response = init_response(
+            response_string="Cart Details Fetched successfully !!"
+        )
+
+    def get(self, request, cart_id):
+        cart = Cart.objects.filter(pk=cart_id).prefetch_related("items__product").first()
+        if not cart:
+            self.response["response_string"] = "Cart Not Found !!"
+            return send_404(data=self.response)
+        cart_data = CartDetailsSerializer(cart)
+        self.response["response_data"] = cart_data.data
+        return send_200(self.response)
+
+    def delete(self, request, cart_id):
+        cart = Cart.objects.filter(pk=cart_id).prefetch_related("items__product").first()
+        if not cart:
+            self.response["response_string"] = "Cart Not Found !!"
+            return send_404(data=self.response)
+        cart.delete()
+        self.response["response_string"] = "Cart Deleted Successfully !!"
+        return send_204(self.response)
 
 
