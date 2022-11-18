@@ -3,8 +3,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from storefront.responses import init_response, send_200, send_201, send_204, send_400, send_401, send_404
-from store.models import Product, Collection, Review, Cart
-from store.serializers import ProductSerializer, ReviewSerializer, CartSerializer, CartDetailsSerializer
+from store.models import Product, Collection, Review, Cart, CartItem
+from store.serializers import ProductSerializer, ReviewSerializer, CartSerializer, CartDetailsSerializer, CartItemSerializer
 import logging
 logger = logging.getLogger("storefront")
 
@@ -155,4 +155,37 @@ class CartDetailView(APIView):
         self.response["response_string"] = "Cart Deleted Successfully !!"
         return send_204(self.response)
 
+
+class CartItemsView(APIView):
+    def __init__(self):
+        self.response = init_response(
+            response_string="Cart Items List Fetched successfully !!"
+        )
+
+    def get(self, request, cart_id):
+        cart = Cart.objects.filter(pk=cart_id).prefetch_related("items__product").first()
+        if not cart:
+            self.response["response_string"] = "Cart Not Found !!"
+            return send_404(data=self.response)
+
+        cart_items = cart.items.all()
+        cart_items_serializer = CartItemSerializer(cart_items, many=True)
+        self.response["response_data"] = cart_items_serializer.data
+        return send_200(self.response)
+
+
+class CartItemDetailsView(APIView):
+    def __init__(self):
+        self.response = init_response(
+            response_string="Cart Item Details Fetched successfully !!"
+        )
+
+    def get(self, request, cart_id, cart_item_id):
+        cart_item = CartItem.objects.filter(pk=cart_item_id, cart_id=cart_id).first()
+        if not cart_item:
+            self.response["response_string"] = "Cart Item Not Found !!"
+            return send_404(data=self.response)
+        cart_item_serializer = CartItemSerializer(cart_item)
+        self.response["response_data"] = cart_item_serializer.data
+        return send_200(self.response)
 
