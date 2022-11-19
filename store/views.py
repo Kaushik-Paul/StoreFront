@@ -3,8 +3,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from storefront.responses import init_response, send_200, send_201, send_204, send_400, send_401, send_404
-from store.models import Product, Collection, Review, Cart, CartItem
-from store.serializers import ProductSerializer, ReviewSerializer, CartSerializer, CartDetailsSerializer, CartItemSerializer
+from store.models import Product, Review, Cart, CartItem, Customer
+from store.serializers import ProductSerializer, ReviewSerializer, CartSerializer, CartDetailsSerializer, CartItemSerializer, CustomerSerializer
 from store.utils import CartItemUtils
 import logging
 logger = logging.getLogger("storefront")
@@ -235,3 +235,27 @@ class CartItemDetailsView(APIView):
         cart_item.delete()
         self.response["response_string"] = "Cart Item Deleted Successfully !!"
         return send_204(self.response)
+
+
+class CreateCustomerView(APIView):
+    def __init__(self):
+        self.response = init_response(
+            response_string="Customer Created Successfully !!"
+        )
+
+    def post(self, request):
+        data = request.data
+        customer_serializer = CustomerSerializer(data=data)
+        if customer_serializer.is_valid():
+            customer_serializer.save()
+            self.response["response_data"] = customer_serializer.data
+            return send_201(self.response)
+        else:
+            self.response["response_string"] = "Error while creating Customer"
+            self.response["response_data"] = customer_serializer.errors
+            return send_400(data=self.response)
+
+
+class CustomerDetailsView(APIView):
+    pass
+
