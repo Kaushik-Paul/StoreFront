@@ -1,9 +1,9 @@
 import json
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
 from storefront.responses import init_response, send_200, send_201, send_204, send_400, send_401, send_404
 from store.models import Product, Review, Cart, CartItem, Customer
+from store.permissions import IsAdminOrReadOnly
 from store.serializers import ProductSerializer, ReviewSerializer, CartSerializer, CartDetailsSerializer, CartItemSerializer, CustomerSerializer
 from store.utils import CartItemUtils
 import logging
@@ -11,6 +11,8 @@ logger = logging.getLogger("storefront")
 
 
 class ProductList(APIView):
+    permission_classes = [IsAdminOrReadOnly]
+
     def __init__(self):
         self.response = init_response(
             response_string="Product List fetched successfully!!"
@@ -35,6 +37,8 @@ class ProductList(APIView):
 
 
 class ProductDetail(APIView):
+    permission_classes = [IsAdminOrReadOnly]
+
     def __init__(self):
         self.response = init_response(
             response_string="Product Details fetched successfully!!"
@@ -257,5 +261,27 @@ class CreateCustomerView(APIView):
 
 
 class CustomerDetailsView(APIView):
-    pass
+    permission_classes = [IsAuthenticated]
+
+    def __init__(self):
+        self.response = init_response(
+            response_string="Customer Details Fetched Successfully !!"
+        )
+
+    def get(self, request):
+        user = request.user
+        customer = Customer.objects.filter(user_id=user.id).first()
+        self.response["response_data"] = CustomerSerializer(customer).data
+        return send_200(self.response)
+
+    def put(self, request):
+        user = request.user
+        customer = Customer.objects.filter(user_id=user.id).first()
+        data = request.data
+        for key in data:
+            setattr(customer, key, data[key])
+        customer.save()
+        self.response["response_string"] = "Customer Details Updated Successfully!!"
+        self.response["response_data"] = CustomerSerializer(customer).data
+        return send_200(data=self.response)
 
