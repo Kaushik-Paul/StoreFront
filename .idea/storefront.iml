@@ -13,7 +13,55 @@
     </facet>
   </component>
   <component name="NewModuleRootManager">
-    <content url="file://$MODULE_DIR$" />
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/.idea/dataSources" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.8/site-packages/certifi" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.8/site-packages/certifi-2022.9.24.dist-info" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.8/site-packages/cffi" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.8/site-packages/cffi-1.15.1-py3.8.egg-info" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.8/site-packages/charset_normalizer" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.8/site-packages/charset_normalizer-2.1.1.dist-info" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.8/site-packages/coreapi" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.8/site-packages/coreapi-2.3.3.dist-info" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.8/site-packages/coreschema" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.8/site-packages/coreschema-0.0.4-py3.8.egg-info" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.8/site-packages/cryptography" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.8/site-packages/cryptography-38.0.3.dist-info" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.8/site-packages/defusedxml" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.8/site-packages/defusedxml-0.7.1.dist-info" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.8/site-packages/django_templated_mail-1.1.1.dist-info" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.8/site-packages/djangorestframework_simplejwt-4.8.0.dist-info" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.8/site-packages/djoser" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.8/site-packages/djoser-2.1.0.dist-info" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.8/site-packages/idna" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.8/site-packages/idna-3.4.dist-info" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.8/site-packages/itypes-1.2.0.dist-info" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.8/site-packages/jinja2" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.8/site-packages/Jinja2-3.1.2.dist-info" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.8/site-packages/markupsafe" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.8/site-packages/MarkupSafe-2.1.1.dist-info" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.8/site-packages/oauthlib" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.8/site-packages/oauthlib-3.2.2.dist-info" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.8/site-packages/openid" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.8/site-packages/pycparser" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.8/site-packages/pycparser-2.21.dist-info" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.8/site-packages/python3_openid-3.2.0.dist-info" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.8/site-packages/requests" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.8/site-packages/requests-2.28.1.dist-info" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.8/site-packages/requests_oauthlib" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.8/site-packages/requests_oauthlib-1.3.1.dist-info" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.8/site-packages/six-1.16.0.dist-info" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.8/site-packages/social_auth_app_django-4.0.0.dist-info" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.8/site-packages/social_auth_core-4.3.0.dist-info" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.8/site-packages/social_core" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.8/site-packages/social_django" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.8/site-packages/templated_mail" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.8/site-packages/uritemplate" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.8/site-packages/uritemplate-4.1.1.dist-info" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.8/site-packages/urllib3" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/lib/python3.8/site-packages/urllib3-1.26.12.dist-info" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/include" />
+    </content>
     <orderEntry type="jdk" jdkName="Python 3.8 (storefront)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
