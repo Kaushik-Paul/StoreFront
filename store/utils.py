@@ -1,4 +1,5 @@
-from store.models import CartItem, Product
+from django.db import transaction
+from store.models import CartItem, Product, Cart, Customer, Order, CartItem, OrderItem
 
 
 class CartItemUtils:
@@ -17,3 +18,31 @@ class CartItemUtils:
             return cart_item
         else:
             return CartItem.objects.create(product=product, quantity=quantity, cart=cart)
+
+
+class OrderItemUtils:
+    @staticmethod
+    def create_order(cart_id, user):
+        with transaction.atomic():
+            cart = Cart.objects.filter(pk=cart_id).first()
+            if not cart:
+                raise Cart.DoesNotExist
+            if CartItem.objects.filter(cart=cart).count() == 0:
+                raise Exception("Cart Item is Empty")
+            customer, created = Customer.objects.get_or_create(user=user)
+            order = Order.objects.create(customer=customer)
+            OrderItemUtils.create_order_items(cart, order)
+            cart.delete()
+            return order
+
+    @staticmethod
+    def create_order_items(cart, order):
+        cart_items = CartItem.objects.filter(cart=cart).select_related("product")
+        for cart_item in cart_items:
+            OrderItem.objects.create(
+                product=cart_item.product,
+                order=order,
+                quantity=cart_item.quantity,
+                unit_price=cart_item.product.unit_price
+            )
+

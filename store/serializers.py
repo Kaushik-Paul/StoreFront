@@ -153,12 +153,13 @@ class OrderItemSerializer(serializers.ModelSerializer):
 
 
 class OrderSerializer(serializers.ModelSerializer):
+    order_id = serializers.IntegerField(source="id")
     items = OrderItemSerializer(many=True)
 
     class Meta:
         model = Order
         fields = [
-            "id",
+            "order_id",
             "customer",
             "placed_at",
             "payment_status",
@@ -166,3 +167,7 @@ class OrderSerializer(serializers.ModelSerializer):
         ]
 
 
+class UpdateOrderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Order
+        fields = ["payment_status"]
