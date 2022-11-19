@@ -3,7 +3,7 @@ from itertools import product
 
 from rest_framework import serializers
 
-from store.models import Product, Collection, Review, Cart, CartItem, Customer
+from store.models import Product, Collection, Review, Cart, CartItem, Customer, Order, OrderItem
 
 
 class CollectionSerializer(serializers.ModelSerializer):
@@ -99,6 +99,7 @@ class CartItemSerializer(serializers.ModelSerializer):
             "cart_item_id",
             "product",
             "total_price",
+            "quantity"
         ]
 
     def get_product(self, cart_item):
@@ -126,4 +127,42 @@ class CustomerSerializer(serializers.ModelSerializer):
             "birth_date",
             "membership",
         ]
+
+
+class OrderItemSerializer(serializers.ModelSerializer):
+    product = serializers.SerializerMethodField()
+    order_item_id = serializers.IntegerField(source="id")
+
+    class Meta:
+        model = OrderItem
+        fields = [
+            "order_item_id",
+            "quantity",
+            "unit_price",
+            "product"
+        ]
+
+    def get_product(self, order_item):
+        product = order_item.product
+        data = {
+            "product_id": product.id,
+            "product_title": product.title,
+            "product_unit_price": product.unit_price,
+        }
+        return data
+
+
+class OrderSerializer(serializers.ModelSerializer):
+    items = OrderItemSerializer(many=True)
+
+    class Meta:
+        model = Order
+        fields = [
+            "id",
+            "customer",
+            "placed_at",
+            "payment_status",
+            "items"
+        ]
+
 

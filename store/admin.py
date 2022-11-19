@@ -177,3 +177,5 @@ class ReviewAdmin(admin.ModelAdmin):
     search_fields = ["product__title", "quantity"]
     list_filter = ("product__title", "quantity")
 
+admin.site.register(models.OrderItem)
+

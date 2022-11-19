@@ -1,5 +1,5 @@
 from django.urls import path
-from . import views
+from store import views
 
 # URLConf
 urlpatterns = [
@@ -13,5 +13,6 @@ urlpatterns = [
     path('carts/<uuid:cart_id>/items/<int:cart_item_id>/', views.CartItemDetailsView.as_view()),
     path('customers/', views.CreateCustomerView.as_view()),
     path('customers/me/', views.CustomerDetailsView.as_view()),
+    path('orders/', views.OrderListView.as_view()),
 
 ]
