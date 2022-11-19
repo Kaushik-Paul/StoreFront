@@ -3,7 +3,7 @@ from itertools import product
 
 from rest_framework import serializers
 
-from store.models import Product, Collection, Review, Cart, CartItem
+from store.models import Product, Collection, Review, Cart, CartItem, Customer
 
 
 class CollectionSerializer(serializers.ModelSerializer):
@@ -112,4 +112,18 @@ class CartItemSerializer(serializers.ModelSerializer):
 
     def get_total_price(self, cart_item):
         return cart_item.total_price
+
+
+class CustomerSerializer(serializers.ModelSerializer):
+    user_id = serializers.IntegerField()
+
+    class Meta:
+        model = Customer
+        fields = [
+            "id",
+            "user_id",
+            "phone",
+            "birth_date",
+            "membership",
+        ]
 
