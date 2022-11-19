@@ -14,5 +14,5 @@ urlpatterns = [
     path('customers/', views.CreateCustomerView.as_view()),
     path('customers/me/', views.CustomerDetailsView.as_view()),
     path('orders/', views.OrderListView.as_view()),
-
+    path('orders/<int:order_id>/', views.OrderDetailsView.as_view()),
 ]

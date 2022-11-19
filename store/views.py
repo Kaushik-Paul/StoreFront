@@ -3,15 +3,16 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from storefront.responses import init_response, send_200, send_201, send_204, send_400, send_401, send_404
 from store.models import Product, Review, Cart, CartItem, Customer, Order
-from store.permissions import IsAdminOrReadOnly
+from store.permissions import IsAdminOrReadOnly, IsAdminOrReadOnlyForAuthenticated
 from store.serializers import (ProductSerializer,
                                ReviewSerializer,
                                CartSerializer,
                                CartDetailsSerializer,
                                CartItemSerializer,
                                CustomerSerializer,
-                               OrderSerializer)
-from store.utils import CartItemUtils
+                               OrderSerializer,
+                               UpdateOrderSerializer)
+from store.utils import CartItemUtils, OrderItemUtils
 import logging
 logger = logging.getLogger("storefront")
 
@@ -310,5 +311,69 @@ class OrderListView(APIView):
         orders = self.get_queryset(request.user)
         self.response["response_data"] = OrderSerializer(orders, many=True).data
         return send_200(self.response)
+
+    def post(self, request):
+        try:
+            user = request.user
+            data = request.data
+            cart_id = data.get("cart_id")
+            if not cart_id:
+                self.response["response_string"] = "Cart id is a mandatory field"
+                return send_400(self.response)
+            order = OrderItemUtils.create_order(cart_id, user)
+            self.response["response_data"] = OrderSerializer(order).data
+            self.response["response_string"] = "Order Created Successfully !!"
+            return send_201(data=self.response)
+        except Cart.DoesNotExist as ex:
+            logger.error(ex)
+            self.response["response_string"] = "Cart id is not valid"
+            return send_400(self.response)
+        except Exception as ex:
+            logger.error(ex)
+            self.response["response_string"] = ex
+            return send_400(self.response)
+
+
+class OrderDetailsView(APIView):
+    permission_classes = [IsAdminOrReadOnlyForAuthenticated]
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.response = init_response(
+            response_string="Order Details Fetched Successfully !!"
+        )
+
+    def get_queryset(self, user):
+        if user.is_staff:
+            return Order.objects.all()
+        customer = Customer.objects.only("id").filter(user_id=user.id).first()
+        return Order.objects.filter(customer=customer)
+
+    def get(self, request, order_id):
+        user = request.user
+        order = self.get_queryset(user).filter(pk=order_id).first()
+        if not order:
+            self.response["response_string"] = "Order Not Found !!"
+            return send_404(data=self.response)
+        self.response["response_data"] = OrderSerializer(order).data
+        return send_200(self.response)
+
+    def patch(self, request, order_id):
+        order = Order.objects.filter(pk=order_id).first()
+        if not order:
+            self.response["response_string"] = "Order Not Found !!"
+            return send_404(data=self.response)
+        data = request.data
+        order_serializer = UpdateOrderSerializer(order, data=data)
+        if order_serializer.is_valid():
+            order_serializer.save()
+            self.response["response_string"] = "Order Updated Successfully!!"
+            self.response["response_data"] = OrderSerializer(order).data
+            return send_200(data=self.response)
+        else:
+            self.response["response_string"] = "Order Updated Failed!!"
+            self.response["response_data"] = order_serializer.errors
+            return send_400(data=self.response)
+
 
 
