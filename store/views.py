@@ -1,6 +1,11 @@
 import json
+from django_filters.rest_framework import DjangoFilterBackend
+from django.core.paginator import Paginator
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.filters import SearchFilter
+
+from store.filters import ProductFilter
 from storefront.responses import init_response, send_200, send_201, send_204, send_400, send_401, send_404
 from store.models import Product, Review, Cart, CartItem, Customer, Order
 from store.permissions import IsAdminOrReadOnly, IsAdminOrReadOnlyForAuthenticated
@@ -18,7 +23,7 @@ logger = logging.getLogger("storefront")
 
 
 class ProductList(APIView):
-    permission_classes = [IsAdminOrReadOnly]
+    # permission_classes = [IsAdminOrReadOnly]
 
     def __init__(self):
         self.response = init_response(
@@ -31,7 +36,14 @@ class ProductList(APIView):
         if collection_id:
             queryset = queryset.filter(collection_id=collection_id)
         products = queryset
-        product_serializer = ProductSerializer(products, many=True)
+        # Add Paginator
+        page_no = int(request.query_params.get("page_number", 1))
+        page_size = int(request.query_params.get("page_size", 2))
+        paginator = Paginator(products, page_size)
+        page_object = paginator.page(page_no)
+        paginated_data = page_object.object_list
+        product_serializer = ProductSerializer(paginated_data, many=True)
+
         self.response["response_data"] = product_serializer.data
         return send_200(self.response)
 
