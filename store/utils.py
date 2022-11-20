@@ -38,11 +38,14 @@ class OrderItemUtils:
     @staticmethod
     def create_order_items(cart, order):
         cart_items = CartItem.objects.filter(cart=cart).select_related("product")
+        order_items = []
         for cart_item in cart_items:
-            OrderItem.objects.create(
+            order_item = OrderItem(
                 product=cart_item.product,
                 order=order,
                 quantity=cart_item.quantity,
                 unit_price=cart_item.product.unit_price
             )
+            order_items.append(order_item)
+        OrderItem.objects.bulk_create(order_items)
 
