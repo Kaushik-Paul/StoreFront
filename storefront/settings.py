@@ -176,3 +176,12 @@ DJOSER = {
         "user_create": "core.serializers.UserCreateSerializer",
     }
 }
+
+CELERY_BROKER_URL = "redis://localhost:6379/1"
+CELERY_BEAT_SCHEDULE = {
+    "send_notification_to_customer": {
+        "task": "playground.tasks.send_notification_to_customer",
+        "schedule": 5,
+        "args": ["Hello From Celery Beat"],
+    }
+}
