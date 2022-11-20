@@ -92,10 +92,7 @@ class ReviewList(APIView):
             self.response["response_string"] = "Product Not Found !!"
             return send_404(data=self.response)
 
-        # TODO: Look into it ??
-        review = Review.objects.create(**request.data)
-        review.product = product
-        review.save()
+        review = Review.objects.create(**request.data, product=product)
         self.response["response_string"] = "Review for the Product Created Successfully"
         self.response["response_data"] = ReviewSerializer(review).data
         return send_201(data=self.response)
