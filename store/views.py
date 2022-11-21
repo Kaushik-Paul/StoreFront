@@ -7,7 +7,7 @@ from rest_framework.filters import SearchFilter
 
 from store.filters import ProductFilter
 from storefront.responses import init_response, send_200, send_201, send_204, send_400, send_401, send_404
-from store.models import Product, Review, Cart, CartItem, Customer, Order
+from store.models import Product, Review, Cart, CartItem, Customer, Order, ProductImage
 from store.permissions import IsAdminOrReadOnly, IsAdminOrReadOnlyForAuthenticated
 from store.serializers import (ProductSerializer,
                                ReviewSerializer,
@@ -16,7 +16,7 @@ from store.serializers import (ProductSerializer,
                                CartItemSerializer,
                                CustomerSerializer,
                                OrderSerializer,
-                               UpdateOrderSerializer)
+                               UpdateOrderSerializer, ProductImageSerializer)
 from store.utils import CartItemUtils, OrderItemUtils
 import logging
 logger = logging.getLogger("storefront")
@@ -87,8 +87,32 @@ class ProductDetail(APIView):
         return send_200(data=self.response)
 
 
+class ProductImageView(APIView):
+    # permission_classes = [IsAdminOrReadOnly]
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.response = init_response(
+            response_string="Product Images fetched successfully!!"
+        )
+
+    def post(self,request, product_id):
+        product = Product.objects.filter(pk=product_id).first()
+        if not product:
+            self.response["response_string"] = "Product is Not Available"
+            return send_404(data=self.response)
+        data = request.data
+        logger.info(f"DATA ======= {data}")
+        # file = request.file
+        product_image = ProductImage.objects.create(image=data.get("image"), product=product)
+        self.response["response_string"] = "Product Image Created Successfully"
+        self.response["response_data"] = ProductImageSerializer(product_image).data
+        return send_201(data=self.response)
+
+
 class ReviewList(APIView):
-    def __init__(self):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         self.response = init_response(
             response_string="Review List fetched successfully!!"
         )
