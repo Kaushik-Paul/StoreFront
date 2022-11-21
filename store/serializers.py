@@ -12,30 +12,6 @@ class CollectionSerializer(serializers.ModelSerializer):
         fields = ["title", "feature_product"]
 
 
-class ProductSerializer(serializers.ModelSerializer):
-    total_tax_price = serializers.SerializerMethodField()
-    collection = serializers.SerializerMethodField()
-
-    class Meta:
-        model = Product
-        fields = [
-            "id",
-            "title",
-            "slug",
-            "description",
-            "unit_price",
-            "inventory",
-            "total_tax_price",
-            "collection",
-        ]
-
-    def get_total_tax_price(self, product):
-        return product.unit_price * Decimal(10)
-
-    def get_collection(self, product):
-        return product.collection.title
-
-
 class ProductImageSerializer(serializers.ModelSerializer):
     product_title = serializers.SerializerMethodField()
 
@@ -49,6 +25,32 @@ class ProductImageSerializer(serializers.ModelSerializer):
 
     def get_product_title(self, product_image):
         return product_image.product.title
+
+
+class ProductSerializer(serializers.ModelSerializer):
+    total_tax_price = serializers.SerializerMethodField()
+    collection = serializers.SerializerMethodField()
+    images = ProductImageSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Product
+        fields = [
+            "id",
+            "title",
+            "slug",
+            "description",
+            "unit_price",
+            "inventory",
+            "total_tax_price",
+            "collection",
+            "images",
+        ]
+
+    def get_total_tax_price(self, product):
+        return product.unit_price * Decimal(10)
+
+    def get_collection(self, product):
+        return product.collection.title
 
 
 class ReviewSerializer(serializers.ModelSerializer):

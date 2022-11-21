@@ -31,14 +31,14 @@ class ProductList(APIView):
         )
 
     def get(self, request):
-        collection_id = request.query_params.get("collection_id")
-        queryset = Product.objects.all()
+        collection_id = request.query_params.get("collection_id") 
+        queryset = Product.objects.prefetch_related("images").all()
         if collection_id:
             queryset = queryset.filter(collection_id=collection_id)
         products = queryset
         # Add Paginator
         page_no = int(request.query_params.get("page_number", 1))
-        page_size = int(request.query_params.get("page_size", 2))
+        page_size = int(request.query_params.get("page_size", 10))
         paginator = Paginator(products, page_size)
         page_object = paginator.page(page_no)
         paginated_data = page_object.object_list
