@@ -1,3 +1,5 @@
+import requests
+from django.core.cache import cache
 from django.core.mail import send_mail, mail_admins, BadHeaderError, EmailMessage
 from django.shortcuts import render
 from playground.tasks import send_notification_to_customer
@@ -17,12 +19,17 @@ def say_hello(request):
         # email.attach_file("playground/static/images/dog.jpeg")
         # email.send()
 
-        message = BaseEmailMessage(
-            template_name="emails/hello.html",
-            context={"name": "Kaushik"}
-        )
-        message.send(["bob@kpaul.com"])
+        # message = BaseEmailMessage(
+        #     template_name="emails/hello.html",
+        #     context={"name": "Kaushik"}
+        # )
+        # message.send(["bob@kpaul.com"])
+        key = "httpbin_result"
+        if cache.get(key) is None:
+            response = requests.get("https://httpbin.org/delay/2")
+            data = response.json()
+            cache.set(key, data)
 
     except BadHeaderError:
         pass
-    return render(request, 'hello.html', {'name': 'Mosh'})
+    return render(request, 'hello.html', {'name': cache.get(key)})
