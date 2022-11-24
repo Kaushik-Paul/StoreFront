@@ -1,4 +1,5 @@
 import requests
+import logging
 from django.core.cache import cache
 from django.core.mail import send_mail, mail_admins, BadHeaderError, EmailMessage
 from django.utils.decorators import method_decorator
@@ -8,8 +9,10 @@ from rest_framework.views import APIView
 from playground.tasks import send_notification_to_customer
 from templated_mail.mail import BaseEmailMessage
 
+logger = logging.getLogger("storefront")
 
-@cache_page(5 * 60)  # 5min
+
+# @cache_page(5 * 60)  # 5min
 def say_hello(request):
     # send_notification_to_customer.delay("HELLO")
     try:
@@ -37,11 +40,12 @@ def say_hello(request):
 
         response = requests.get("https://httpbin.org/delay/2")
         data = response.json()
+        logger.info(f"DATA========>>>>>>>> {data}")
 
     except BadHeaderError:
         pass
     # return render(request, 'hello.html', {'name': cache.get(key)})
-    return render(request, 'hello.html', {'name': data})
+    return render(request, 'hello.html', {'name': "Mosh"})
 
 
 class HelloView(APIView):

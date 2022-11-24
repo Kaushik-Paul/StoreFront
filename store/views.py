@@ -43,6 +43,7 @@ class ProductList(APIView):
         page_object = paginator.page(page_no)
         paginated_data = page_object.object_list
         product_serializer = ProductSerializer(paginated_data, many=True)
+        logger.info(f"PRODUCT SERIALIZER ====>>> {product_serializer.data}")
 
         self.response["response_data"] = product_serializer.data
         return send_200(self.response)
