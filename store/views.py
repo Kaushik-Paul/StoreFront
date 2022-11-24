@@ -23,7 +23,7 @@ logger = logging.getLogger("storefront")
 
 
 class ProductList(APIView):
-    # permission_classes = [IsAdminOrReadOnly]
+    permission_classes = [IsAdminOrReadOnly]
 
     def __init__(self):
         self.response = init_response(
