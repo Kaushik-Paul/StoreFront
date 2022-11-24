@@ -23,6 +23,7 @@ admin.site.site_header = 'Storefront Admin'
 admin.site.index_title = 'Admin'
 
 urlpatterns = [
+    path("", include("core.urls")),
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
     path('playground/', include('playground.urls')),
